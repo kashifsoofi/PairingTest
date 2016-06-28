@@ -11,12 +11,19 @@ namespace QuestionServiceWebApi
             {
                 QuestionnaireTitle = "Geography Questions",
                 QuestionsText = new List<string>
-                                           {
-                                               "What is the capital of Cuba?",
-                                               "What is the capital of France?",
-                                               "What is the capital of Poland?",
-                                               "What is the capital of Germany?"
-                                           }
+                {
+                    "What is the capital of Cuba?",
+                    "What is the capital of France?",
+                    "What is the capital of Poland?",
+                    "What is the capital of Germany?"
+                },
+                AnswersText = new List<string>
+                {
+                    "Berlin",
+                    "Warsaw",
+                    "Paris",
+                    "Havana"
+                }
             };
         }
     }
