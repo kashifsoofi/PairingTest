@@ -1,6 +1,10 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
 using PairingTest.Web.Controllers;
 using PairingTest.Web.Models;
+using PairingTest.Web.Services;
+using QuestionServiceWebApi;
+using System.Collections.Generic;
 
 namespace PairingTest.Unit.Tests.Web
 {
@@ -8,14 +12,22 @@ namespace PairingTest.Unit.Tests.Web
     public class QuestionnaireControllerTests
     {
         [Test]
-        public void ShouldGetQuestions()
+        public async void ShouldGetQuestionnaire()
         {
             //Arrange
             var expectedTitle = "My expected quesitons";
-            var questionnaireController = new QuestionnaireController();
+            Mock<IQuestionnaireService> mockQuestionnaireService = new Mock<IQuestionnaireService>();
+            var questionnaire = new QuestionnaireViewModel
+            {
+                QuestionnaireTitle = expectedTitle
+            };
+            mockQuestionnaireService.Setup(t => t.GetAsync()).ReturnsAsync(questionnaire);
+
+            var questionnaireController = new QuestionnaireController(mockQuestionnaireService.Object);
 
             //Act
-            var result = (QuestionnaireViewModel)questionnaireController.Index().ViewData.Model;
+            var viewResult = await questionnaireController.Index();
+            var result = (QuestionnaireViewModel) viewResult.ViewData.Model;
             
             //Assert
             Assert.That(result.QuestionnaireTitle, Is.EqualTo(expectedTitle));
