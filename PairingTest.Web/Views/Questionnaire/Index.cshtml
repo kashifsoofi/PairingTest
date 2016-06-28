@@ -5,6 +5,15 @@
         <title>@Model.QuestionnaireTitle</title>
     </head>
     <body>
-              
+        <h1>@Model.QuestionnaireTitle</h1>
+
+        @{
+            foreach (var question in Model.QuestionsText)
+            {
+                <div>
+                    <p>@question</p>
+                </div>
+            }
+        }
     </body>
 </html>
