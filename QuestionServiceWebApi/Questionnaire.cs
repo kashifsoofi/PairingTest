@@ -12,5 +12,7 @@ namespace QuestionServiceWebApi
         public IList<string> QuestionsText { get; set; }
         [DataMember]
         public IList<string> AnswersText { get; set; }
+        [DataMember]
+        public IList<int> CorrectAnswers { get; set; }
     }
 }

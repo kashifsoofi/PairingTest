@@ -20,13 +20,18 @@ namespace PairingTest.Web.Installers
                     .LifestylePerWebRequest());
             container.Register(
                 Component
-                    .For<IGetApiClient>()
+                    .For<IGetApiClient, IPostApiClient>()
                     .ImplementedBy<WebApiClient>()
                     .LifestylePerWebRequest());
             container.Register(
                 Component
                     .For<IQuestionnaireService>()
                     .ImplementedBy<QuestionnaireService>()
+                    .LifestylePerWebRequest());
+            container.Register(
+                Component
+                    .For<IMarkingService>()
+                    .ImplementedBy<MarkingService>()
                     .LifestylePerWebRequest());
         }
     }

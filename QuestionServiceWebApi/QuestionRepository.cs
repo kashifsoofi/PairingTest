@@ -23,7 +23,8 @@ namespace QuestionServiceWebApi
                     "Warsaw",
                     "Paris",
                     "Havana"
-                }
+                },
+                CorrectAnswers = new int[] { 3, 2, 1, 0 }
             };
         }
     }

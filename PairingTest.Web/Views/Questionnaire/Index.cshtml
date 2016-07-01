@@ -6,28 +6,37 @@
     </head>
     <body>
         <h1>@Model.QuestionnaireTitle</h1>
-
-        <ol>
-            @{
-                var i = 0;
-                foreach (var question in Model.QuestionsText)
-                {
-                    <li>
-                        <p>@question</p>
-                        <div>
-                            <ul style="list-style-type: none">
-                                @foreach (var answer in Model.AnswersText)
-                                {
-                                    <li>
-                                        <input type="radio" name="question-@i"> @answer
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                    </li>
-                    i++;
+        
+        @using (Html.BeginForm("Submit", "Questionnaire", FormMethod.Post))
+        {
+            <ol>
+                @{
+                    var i = 0;
+                    foreach (var question in Model.QuestionsText)
+                    {
+                        <li>
+                            <p>@question</p>
+                            <div>
+                                <ul style="list-style-type: none">
+                                    @{
+                                        var j = 0;
+                                        foreach (var answer in Model.AnswersText)
+                                        {
+                                            <li>
+                                                @Html.RadioButtonFor(m => m.SelectedAnswers[i], j) @answer
+                                                @*<input type="radio" name="question-@i"> @answer*@
+                                            </li>
+                                            j++;
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                        i++;
+                    }
                 }
-            }
-        </ol>
+            </ol>
+            <input type="submit" value="Submit" />
+        }
     </body>
 </html>

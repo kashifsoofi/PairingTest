@@ -149,8 +149,11 @@
     <Compile Include="Plumbing\WindsorControllerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IGetApiClient.cs" />
+    <Compile Include="Services\IMarkingService.cs" />
+    <Compile Include="Services\IPostApiClient.cs" />
     <Compile Include="Services\IQuestionnaireService.cs" />
     <Compile Include="Services\IServiceUriProvider.cs" />
+    <Compile Include="Services\MarkingService.cs" />
     <Compile Include="Services\QuestionnaireService.cs" />
     <Compile Include="Services\ServiceUriProvider.cs" />
     <Compile Include="Services\WebApiClient.cs" />
@@ -182,6 +185,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Readme.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Questionnaire\Submit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QuestionServiceWebApi\QuestionServiceWebApi.csproj">
+      <Project>{4D222FA3-1BB6-46FE-9AA0-D97FB4A92DB5}</Project>
+      <Name>QuestionServiceWebApi</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

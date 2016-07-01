@@ -27,7 +27,7 @@ namespace PairingTest.Unit.Tests.Web
             mockGetApiClient.Setup(m => m.Get<QuestionnaireViewModel>(It.IsAny<string>()))
                 .ReturnsAsync(questionnaire);
 
-            var questionnaireService = new QuestionnaireService(mockGetApiClient.Object);
+            var questionnaireService = new Questionnaire(mockGetApiClient.Object);
 
             //Act
             var result = (QuestionnaireViewModel) await questionnaireService.GetAsync();

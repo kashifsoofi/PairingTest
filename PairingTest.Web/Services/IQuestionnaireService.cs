@@ -1,4 +1,5 @@
 ﻿using PairingTest.Web.Models;
+using QuestionServiceWebApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace PairingTest.Web.Services
     public interface IQuestionnaireService
     {
         Task<QuestionnaireViewModel> GetAsync();
+        Task<Questionnaire> GetQuestionnaire();
     }
 }

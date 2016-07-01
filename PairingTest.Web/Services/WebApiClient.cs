@@ -9,7 +9,7 @@ using System.Web;
 
 namespace PairingTest.Web.Services
 {
-    public class WebApiClient : IGetApiClient
+    public class WebApiClient : IGetApiClient, IPostApiClient
     {
         private readonly Uri _serverBaseUri;
 
@@ -28,6 +28,16 @@ namespace PairingTest.Web.Services
             return JsonConvert.DeserializeObject(await GetAsync(requestUri));
         }
 
+        public async Task<T> Post<T>(string requestUri, object data)
+        {
+            return JsonConvert.DeserializeObject<T>(await PostAsync(requestUri, data));
+        }
+
+        public async Task<object> Post(string requestUri, object data)
+        {
+            return JsonConvert.DeserializeObject(await PostAsync(requestUri, data));
+        }
+
         private async Task<string> GetAsync(string requestUri)
         {
             using (var client = new HttpClient())
@@ -37,6 +47,21 @@ namespace PairingTest.Web.Services
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var response = await client.GetAsync(requestUri);
+                response.EnsureSuccessStatusCode(); // throw if not a success code
+
+                return await response.Content.ReadAsStringAsync();
+            }
+        }
+
+        private async Task<string> PostAsync(string requestUri, object data)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = _serverBaseUri;
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var response = await client.PostAsJsonAsync(requestUri, data);
                 response.EnsureSuccessStatusCode(); // throw if not a success code
 
                 return await response.Content.ReadAsStringAsync();

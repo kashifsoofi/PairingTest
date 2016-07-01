@@ -6,13 +6,15 @@ namespace QuestionServiceWebApi.Controllers
     public class QuestionsController : ApiController
     {
         private readonly IQuestionRepository _questionRepository;
+        private readonly IMarkingService _markingService;
 
-        public QuestionsController(IQuestionRepository questionRepository)
+        public QuestionsController(IQuestionRepository questionRepository, IMarkingService markingService)
         {
             _questionRepository = questionRepository;
+            _markingService = markingService;
         }
 
-        public QuestionsController() : this(new QuestionRepository())
+        public QuestionsController() : this(new QuestionRepository(), new MarkingService())
         {
         }
 
@@ -29,8 +31,11 @@ namespace QuestionServiceWebApi.Controllers
         }
 
         // POST api/questions
-        public void Post([FromBody]string value)
+        public double Post([FromBody] dynamic questionnaireWithAnswers)
         {
+            var questionnaire = questionnaireWithAnswers.Questionnaire.ToObject<Questionnaire>();
+            var selectedAnswers = questionnaireWithAnswers.SelectedAnswers.ToObject<int[]>();
+            return _markingService.MarkQuestionnaire(questionnaire, selectedAnswers);
         }
 
         // PUT api/questions/5

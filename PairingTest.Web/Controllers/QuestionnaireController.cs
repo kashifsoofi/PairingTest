@@ -8,9 +8,12 @@ namespace PairingTest.Web.Controllers
     public class QuestionnaireController : Controller
     {
         private readonly IQuestionnaireService _questionnaireService;
-        public QuestionnaireController(IQuestionnaireService questionnaireService)
+        private readonly IMarkingService _markingService;
+
+        public QuestionnaireController(IQuestionnaireService questionnaireService, IMarkingService markingService)
         {
             _questionnaireService = questionnaireService;
+            _markingService = markingService;
         }
 
         /* ASYNC ACTION METHOD... IF REQUIRED... */
@@ -24,5 +27,14 @@ namespace PairingTest.Web.Controllers
         //{
         //    return View(new QuestionnaireViewModel());
         //}
+
+        [HttpPost]
+        public async Task<ViewResult> Submit(int[] selectedAnswers)
+        {
+            var questionnaire = await _questionnaireService.GetQuestionnaire();
+            var percentage = await _markingService.MarkQuestionnaire(questionnaire, selectedAnswers);
+            ViewData["Percentage"] = percentage;
+            return View();
+        }
     }
 }
